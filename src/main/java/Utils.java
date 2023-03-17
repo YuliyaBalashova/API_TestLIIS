@@ -51,6 +51,17 @@ public class Utils {
                 .log().all();
     }
 
+    // GET с параметром
+    public static ValidatableResponse doGetParam(String endpoint, int pagination) {
+        return given()
+                .log().all()
+                .params("page", pagination)
+                .header("Content-type", "application/json")
+                .get(endpoint)
+                .then()
+                .log().all();
+    }
+
     // GET
     public static ValidatableResponse doGet(String endpoint, int id) {
         return given()
@@ -70,6 +81,19 @@ public class Utils {
                 .body(body)
                 .when()
                 .put(endpoint + "/" + id)
+                .then()
+                .log().all();
+    }
+
+    // PUT с авторизацией
+    public static ValidatableResponse doPut(String endpoint, Object body, String username, String password) {
+        return given()
+                .log().all()
+                .auth().basic(username, password)
+                .header("Content-type", "application/json")
+                .body(body)
+                .when()
+                .put(endpoint)
                 .then()
                 .log().all();
     }
